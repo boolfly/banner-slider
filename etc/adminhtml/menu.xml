@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /************************************************************
+ * *
+ *  * Copyright © Boolfly. All rights reserved.
+ *  * See COPYING.txt for license details.
+ *  *
+ *  * @author    info@boolfly.com
+ * *  @project   Banner Slider
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Boolfly_BannerSlider::manager" title="Banner Slider" module="Boolfly_BannerSlider" resource="Boolfly_BannerSlider::manager" parent="Magento_Backend::content" sortOrder="200"/>
+        <add id="Boolfly_BannerSlider::slider" title="Manager Slider" module="Boolfly_BannerSlider" action="bannerslider/slider/index" resource="Boolfly_BannerSlider::slider" parent="Boolfly_BannerSlider::manager"/>
+        <add id="Boolfly_BannerSlider::banner" title="Manager Banner" module="Boolfly_BannerSlider" action="bannerslider/banner/index" resource="Boolfly_BannerSlider::banner" parent="Boolfly_BannerSlider::manager"/>
+    </menu>
+</config>

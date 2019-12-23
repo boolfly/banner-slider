@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /************************************************************
+ * *
+ *  * Copyright © Boolfly. All rights reserved.
+ *  * See COPYING.txt for license details.
+ *  *
+ *  * @author    info@boolfly.com
+ * *  @project   Banner Slider
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_boolfly_banner_save_entity_before">
+        <observer name="processingImageUpload" instance="Boolfly\BannerSlider\Observer\ProcessingImageUpload"/>
+    </event>
+    <event name="boolfly_banner_delete_commit_after">
+        <observer name="deleteImageUpload" instance="Boolfly\BannerSlider\Observer\CheckImageUploaded"/>
+    </event>
+    <event name="boolfly_banner_save_commit_after">
+        <observer name="checkingRedundantImageUpload" instance="Boolfly\BannerSlider\Observer\CheckImageUploaded"/>
+    </event>
+</config>

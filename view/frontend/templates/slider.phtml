@@ -1,0 +1,72 @@
+<?php
+/***********************************************************************
+ * *
+ *  *
+ *  * @copyright Copyright © Boolfly. All rights reserved.
+ *  * See COPYING.txt for license details.
+ *  * @author    info@boolfly.com
+ * *
+ */
+?>
+<?php
+/** @var \Boolfly\BannerSlider\Block\Cms\Slider $block */
+/** @var \Boolfly\BannerSlider\Model\Banner[] $bannerCollection */
+$bannerCollection = $block->getBannerCollection();
+?>
+<div class="bf-banner-sliders-block">
+    <div data-role="loader" class="loading-mask">
+        <div class="loader">
+            <img src="<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                 alt="<?= /* @escapeNotVerified */ __('Loading...') ?>">
+        </div>
+    </div>
+    <div class="bf-banner-sliders no-display" id="bf-banner-sliders" data-block="bf-banner-sliders">
+        <?php foreach ($bannerCollection as $banner) :?>
+            <div class="banner-slider slick-slider">
+                <div class="banner-image">
+                    <a href="<?= $banner->getBannerUrl()?: 'javascript:void(0);'?>">
+                        <picture>
+                            <!--[if IE 9]><video style="display: none;"><![endif]-->
+                            <?php if ($imageDesktopUrl = $banner->getImageDesktopUrl()) :?>
+                                <source srcset="<?= /* @escapeNotVerified */ $imageDesktopUrl;?>" media="(min-width: 1024px)">
+                            <?php endif; ?>
+                            <?php if ($imageTabletUrl = $banner->getImageTabletUrl()) :?>
+                                <source srcset="<?= /* @escapeNotVerified */ $imageTabletUrl;?>" media="(min-width: 768px) and (max-width: 1023px)">
+                            <?php endif; ?>
+                            <?php if ($imageMobileUrl = $banner->getImageMobileUrl()) :?>
+                                <source srcset="<?= /* @escapeNotVerified */ $imageMobileUrl;?>" media="(max-width: 767px)">
+                            <?php endif; ?>
+                            <!--[if IE 9]></video><![endif]-->
+                            <img data-lazy="<?= /* @escapeNotVerified */ $imageDesktopUrl;?>" srcset="<?= /* @escapeNotVerified */ $imageDesktopUrl;?>" alt="<?= /* @escapeNotVerified */ $banner->getTitle();?>">
+                        </picture>
+                    </a>
+                </div>
+                <div class="banner-content <?= /* @escapeNotVerified */ $block->escapeHtml($banner->getAlignText()) ?>">
+                    <h2 class="banner-title"><?= /* @escapeNotVerified */ $block->escapeHtml($banner->getTitle()) ?></h2>
+                    <?php if ($banner->getDescription()) :?>
+                        <div class="banner-inner <?= /* @escapeNotVerified */ $block->escapeHtml($banner->getAlignText()) ?>">
+                            <span class="banner-caption"><?= /* @escapeNotVerified */ $banner->getDescription()?></span>
+                        </div>
+                    <?php endif;?>
+                    <?php if ($banner->hasButton()) :?>
+                        <?php $buttonUrl  = $banner->getButtonUrl();?>
+                        <?php $buttonText = $banner->getButtonText() ?: __('Shop Now');?>
+                        <div class="banner-button">
+                            <a href="<?= /* @escapeNotVerified */ $buttonUrl ?: 'javascript:void(0);'?>"
+                               title="<?= /* @escapeNotVerified */ $buttonText?>">
+                                <span><?= /* @escapeNotVerified */ $buttonText?></span>
+                            </a>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        <?php endforeach;?>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "[data-block=bf-banner-sliders]": {
+            "boolflyBannerSlider": <?= $block->getJsonData() ?>
+        }
+    }
+</script>

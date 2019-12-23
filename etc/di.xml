@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /************************************************************
+ * *
+ *  * Copyright © Boolfly. All rights reserved.
+ *  * See COPYING.txt for license details.
+ *  *
+ *  * @author    info@boolfly.com
+ * *  @project   Banner Slider
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+   <preference for="Boolfly\BannerSlider\Api\Data\BannerInterface" type="Boolfly\BannerSlider\Model\Banner"/>
+   <preference for="Boolfly\BannerSlider\Api\Data\SliderInterface" type="Boolfly\BannerSlider\Model\Slider"/>
+   <preference for="Boolfly\BannerSlider\Api\BannerRepositoryInterface" type="Boolfly\BannerSlider\Model\BannerRepository"/>
+   <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+      <arguments>
+         <argument name="collections" xsi:type="array">
+            <item name="boolfly_banner_listing_data_source" xsi:type="string">BoolflyBannerCollection</item>
+            <item name="boolfly_banner_grid_data_source" xsi:type="string">BoolflyBannerCollection</item>
+            <item name="boolfly_slider_listing_data_source" xsi:type="string">BoolflySliderCollection</item>
+         </argument>
+      </arguments>
+   </type>
+   <virtualType name="BoolflyBannerCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+      <arguments>
+         <argument name="mainTable" xsi:type="string">boolfly_banner</argument>
+         <argument name="resourceModel" xsi:type="string">Boolfly\BannerSlider\Model\ResourceModel\Banner</argument>
+      </arguments>
+   </virtualType>
+   <virtualType name="BoolflySliderCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+      <arguments>
+         <argument name="mainTable" xsi:type="string">boolfly_slider</argument>
+         <argument name="resourceModel" xsi:type="string">Boolfly\BannerSlider\Model\ResourceModel\Slider</argument>
+      </arguments>
+   </virtualType>
+</config>

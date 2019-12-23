@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /************************************************************
+ * *
+ *  * Copyright © Boolfly. All rights reserved.
+ *  * See COPYING.txt for license details.
+ *  *
+ *  * @author    info@boolfly.com
+ * *  @project   Banner Slider
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">boolfly_slider_form.boolfly_slider_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Slider Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back" class="Boolfly\Base\Block\Adminhtml\Edit\Button\Back"/>
+            <button name="save" class="Boolfly\Base\Block\Adminhtml\Edit\Button\Save"/>
+            <button name="delete" class="Boolfly\Base\Block\Adminhtml\Edit\Button\Delete"/>
+            <button name="save_and_continue" class="Boolfly\Base\Block\Adminhtml\Edit\Button\SaveAndContinue"/>
+        </buttons>
+        <namespace>boolfly_slider_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>boolfly_slider_form.boolfly_slider_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="boolfly_slider_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <validateUrl path="bannerslider/slider/validate"/>
+            <submitUrl path="bannerslider/slider/save"/>
+        </settings>
+        <dataProvider class="Boolfly\BannerSlider\Model\Slider\DataProvider" name="boolfly_slider_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>banner_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="5">
+        <settings>
+            <collapsible>false</collapsible>
+            <label/>
+        </settings>
+        <field name="id" formElement="hidden">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">boolfly_slider</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="status" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">boolfly_slider</item>
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>boolean</dataType>
+                <label translate="true">Enable</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="title" sortOrder="30" formElement="input">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>string</dataType>
+                <label translate="true">Title</label>
+            </settings>
+        </field>
+        <field name="animation_effect" sortOrder="70" formElement="select">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Animation Effect</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Boolfly\BannerSlider\Model\Source\Effect"/>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="category_id" formElement="multiselect" sortOrder="75" component="Magento_Ui/js/form/element/ui-select" template="ui/form/field">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">boolfly_slider</item>
+                    <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Display In Category</label>
+                <dataType>text</dataType>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Boolfly\BannerSlider\Model\Source\CategoryTree"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <field name="auto_play" sortOrder="80" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">boolfly_slider</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>boolean</dataType>
+                <label translate="true">Auto Play</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="speed" sortOrder="80" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Speed</label>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="banners">
+        <settings>
+            <label translate="true">Banners</label>
+            <collapsible>true</collapsible>
+            <opened>false</opened>
+        </settings>
+        <button name="assign_button" template="ui/form/components/button/container">
+            <settings>
+                <title translate="true">Assign Banners</title>
+                <dataScope />
+            </settings>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName }.modal</item>
+                            <item name="actionName" xsi:type="string">toggleModal</item>
+                        </item>
+                    </item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                </item>
+            </argument>
+        </button>
+        <dynamicRows name="assigned_banners" component="Magento_Ui/js/dynamic-rows/dynamic-rows-grid" template="ui/dynamic-rows/templates/grid" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="columnsHeaderAfterRender" xsi:type="boolean">true</item>
+                    <item name="deleteButtonLabel" xsi:type="string" translate="true">Remove</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+                    <item name="dataProvider" xsi:type="string">data.boolfly_banner_listing</item>
+                    <item name="map" xsi:type="array">
+                        <item name="banner_id" xsi:type="string">banner_id</item>
+                        <item name="title" xsi:type="string">title</item>
+                        <item name="image_desktop" xsi:type="string">image_desktop_src</item>
+                        <item name="image_tablet" xsi:type="string">image_tablet_src</item>
+                        <item name="image_mobile" xsi:type="string">image_mobile_src</item>
+                        <item name="status" xsi:type="string">status_text</item>
+                    </item>
+                    <item name="identificationDRProperty" xsi:type="string">banner_id</item>
+                </item>
+            </argument>
+            <settings>
+                <defaultRecord>false</defaultRecord>
+                <addButton>false</addButton>
+                <recordTemplate>record</recordTemplate>
+                <identificationProperty>banner_id</identificationProperty>
+                <links>
+                    <link name="insertData">${ $.provider }:${ $.dataProvider }</link>
+                </links>
+                <dndConfig>
+                    <param name="enabled" xsi:type="boolean">true</param>
+                    <param name="template" xsi:type="string">ui/dynamic-rows/cells/dnd</param>
+                </dndConfig>
+                <columnsHeader>false</columnsHeader>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="componentType" xsi:type="string">container</item>
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="positionProvider" xsi:type="string">position</item>
+                    </item>
+                </argument>
+                <field name="banner_id" formElement="input" sortOrder="10">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <dataType>text</dataType>
+                        <dataScope>banner_id</dataScope>
+                        <label translate="true">ID</label>
+                    </settings>
+                </field>
+                <field name="title" formElement="input" sortOrder="15">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <label translate="true">Title</label>
+                        <labelVisible>false</labelVisible>
+                    </settings>
+                </field>
+                <field name="position" formElement="input" sortOrder="20">
+                    <settings>
+                        <elementTmpl>ui/form/element/input</elementTmpl>
+                        <dataType>number</dataType>
+                        <dataScope>position</dataScope>
+                        <label translate="true">Position</label>
+                        <visible>false</visible>
+                    </settings>
+                </field>
+                <field name="image_desktop" formElement="input" sortOrder="30">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/thumbnail</elementTmpl>
+                        <label translate="true">Image Desktop</label>
+                        <labelVisible>false</labelVisible>
+                        <dataScope>image_desktop</dataScope>
+                    </settings>
+                </field>
+                <field name="image_tablet" formElement="input" sortOrder="40">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/thumbnail</elementTmpl>
+                        <label translate="true">Image Tablet</label>
+                        <dataScope>image_tablet</dataScope>
+                    </settings>
+                </field>
+                <field name="image_mobile" formElement="input" sortOrder="50">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/thumbnail</elementTmpl>
+                        <label translate="true">Image Mobile</label>
+                        <dataScope>image_mobile</dataScope>
+                    </settings>
+                </field>
+                <field name="status" formElement="input" sortOrder="60">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <dataType>text</dataType>
+                        <dataScope>status</dataScope>
+                        <label translate="true">Status</label>
+                    </settings>
+                </field>
+                <actionDelete name="actionDelete" sortOrder="80">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalClasses" xsi:type="string">data-grid-actions-cell</item>
+                            <item name="fit" xsi:type="number">1</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <label translate="true">Actions</label>
+                        <dataType>text</dataType>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
+        </dynamicRows>
+        <modal name="modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string" translate="true">Assign Banners</option>
+                    <option name="buttons" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="text" xsi:type="string">Cancel</item>
+                            <item name="class" xsi:type="string">action-secondary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.name }</item>
+                                    <item name="actionName" xsi:type="string">actionCancel</item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Add Selected Banners</item>
+                            <item name="class" xsi:type="string">action-primary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">index = boolfly_banner_listing</item>
+                                    <item name="actionName" xsi:type="string">save</item>
+                                </item>
+                                <item name="1" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.name }</item>
+                                    <item name="actionName" xsi:type="string">actionDone</item>
+                                </item>
+                            </item>
+                        </item>
+                    </option>
+                </options>
+            </settings>
+            <insertListing name="boolfly_banner_listing">
+                <settings>
+                    <autoRender>true</autoRender>
+                    <dataScope>boolfly_banner_listing</dataScope>
+                    <ns>boolfly_banner_listing</ns>
+                    <externalProvider>boolfly_banner_listing.boolfly_banner_listing_data_source</externalProvider>
+                    <selectionsProvider>boolfly_banner_listing.boolfly_banner_listing.banner_columns.ids</selectionsProvider>
+                    <dataLinks>
+                        <imports>false</imports>
+                        <exports>true</exports>
+                    </dataLinks>
+                    <externalFilterMode>true</externalFilterMode>
+                </settings>
+            </insertListing>
+        </modal>
+    </fieldset>
+    <fieldset name="cms_pages">
+        <settings>
+            <label translate="true">CMS Page</label>
+            <collapsible>true</collapsible>
+            <opened>false</opened>
+        </settings>
+        <button name="add_button" template="ui/form/components/button/container">
+            <settings>
+                <title translate="true">Add CMS Page</title>
+                <dataScope />
+            </settings>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName }.modal</item>
+                            <item name="actionName" xsi:type="string">toggleModal</item>
+                        </item>
+                    </item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                </item>
+            </argument>
+        </button>
+        <dynamicRows name="cms_pages" component="Magento_Ui/js/dynamic-rows/dynamic-rows-grid" template="ui/dynamic-rows/templates/grid" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="map" xsi:type="array">
+                        <item name="page_id" xsi:type="string">page_id</item>
+                        <item name="title" xsi:type="string">title</item>
+                        <item name="identifier" xsi:type="string">identifier</item>
+                        <item name="is_active" xsi:type="string">is_active_text</item>
+                    </item>
+                    <item name="identificationDRProperty" xsi:type="string">page_id</item>
+                    <item name="columnsHeaderAfterRender" xsi:type="boolean">true</item>
+                    <item name="deleteButtonLabel" xsi:type="string" translate="true">Remove</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+                    <item name="dataProvider" xsi:type="string">data.cms_page_listing</item>
+                </item>
+            </argument>
+            <settings>
+                <defaultRecord>false</defaultRecord>
+                <addButton>false</addButton>
+                <recordTemplate>cms_page</recordTemplate>
+                <identificationProperty>page_id</identificationProperty>
+                <links>
+                    <link name="insertData">${ $.provider }:${ $.dataProvider }</link>
+                </links>
+                <dndConfig>
+                    <param name="enabled" xsi:type="boolean">false</param>
+                </dndConfig>
+                <columnsHeader>false</columnsHeader>
+            </settings>
+            <container name="cms_page" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="componentType" xsi:type="string">container</item>
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                    </item>
+                </argument>
+                <field name="page_id" formElement="input" sortOrder="10">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <dataType>text</dataType>
+                        <dataScope>page_id</dataScope>
+                        <label translate="true">ID</label>
+                    </settings>
+                </field>
+                <field name="title" formElement="input" sortOrder="15">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <label translate="true">Title</label>
+                        <labelVisible>false</labelVisible>
+                    </settings>
+                </field>
+                <field name="identifier" formElement="input" sortOrder="20">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <label translate="true">URL Key</label>
+                        <labelVisible>false</labelVisible>
+                    </settings>
+                </field>
+                <field name="is_active" formElement="input" sortOrder="60">
+                    <settings>
+                        <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
+                        <dataType>text</dataType>
+                        <dataScope>is_active</dataScope>
+                        <label translate="true">Status</label>
+                    </settings>
+                </field>
+                <actionDelete name="actionDelete" sortOrder="80">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="additionalClasses" xsi:type="string">data-grid-actions-cell</item>
+                            <item name="fit" xsi:type="number">1</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <label translate="true">Actions</label>
+                        <dataType>text</dataType>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+                </actionDelete>
+            </container>
+        </dynamicRows>
+        <modal name="modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string" translate="true">Add CMS Pages</option>
+                    <option name="buttons" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="text" xsi:type="string">Cancel</item>
+                            <item name="class" xsi:type="string">action-secondary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.name }</item>
+                                    <item name="actionName" xsi:type="string">actionCancel</item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Add Selected Pages</item>
+                            <item name="class" xsi:type="string">action-primary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">index = cms_page_listing</item>
+                                    <item name="actionName" xsi:type="string">save</item>
+                                </item>
+                                <item name="1" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">${ $.name }</item>
+                                    <item name="actionName" xsi:type="string">actionDone</item>
+                                </item>
+                            </item>
+                        </item>
+                    </option>
+                </options>
+            </settings>
+            <insertListing name="cms_page_listing">
+                <settings>
+                    <autoRender>true</autoRender>
+                    <dataScope>cms_page_listing</dataScope>
+                    <ns>cms_page_listing</ns>
+                    <externalProvider>cms_page_listing.cms_page_listing_data_source</externalProvider>
+                    <selectionsProvider>cms_page_listing.cms_page_listing.cms_page_columns.ids</selectionsProvider>
+                    <dataLinks>
+                        <imports>false</imports>
+                        <exports>true</exports>
+                    </dataLinks>
+                    <externalFilterMode>true</externalFilterMode>
+                </settings>
+            </insertListing>
+        </modal>
+    </fieldset>
+</form>
